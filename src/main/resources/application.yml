@@ -1,0 +1,54 @@
+#application:
+#  name: calibration
+#  description: ${application.name} is a springboot application
+#  version: @project.version@
+#  environment: dev
+#  base-url: /api
+#  baseurl: /api
+#  secure:
+#    inclusions: ${application.base-url}/**, /core/exec/api/**
+#    exclusions: ${application.base-url}/open/**, ${application.base-url}/showBuildInfo, ${application.base-url}/monitor, ${application.base-url}/welcome, ${application.base-url}/actuator/**, ${application.base-url}/swagger-ui/,/error
+#  service:
+#    test:
+#      url: https://localhost:8080/api/v1/sysdate
+#    health:
+#      url: https://localhoat:8080/health
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        jdbc:
+          batch_size: 10000
+          fetch_size: 10000
+  datasource:
+    url: jdbc:mysql://localhost:3306/dev_env
+    username: root
+    password: 1974@Surya
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    current-sysdate-query: SELECT SYSDATE FROM DUAL
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  show-actuator: true
+
+management:
+  endpoints:
+    web.exposure:
+      include: openapi, swagger-ui
+#management:
+#  endpoint:
+#    shutdown:
+#      enabled: true
+#  endpoints:
+#    web:
+#      base-path: ${application.base-url}/actuator
+#      exposure:
+#        include: health, info, loggers, env, metrics, app-health, prometheus, refresh
+#      path-mapping:
+#        health: health
