@@ -27,7 +27,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/dev_env
     username: root
-    password: 1974@Surya
+    password: 1978@Surya
     driver-class-name: com.mysql.cj.jdbc.Driver
     current-sysdate-query: SELECT SYSDATE FROM DUAL
 springdoc:
