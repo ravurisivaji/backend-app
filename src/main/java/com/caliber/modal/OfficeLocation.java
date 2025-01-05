@@ -9,7 +9,7 @@ import lombok.Setter;
 @Table(name = "OFFICE_LOCATION")
 @Getter
 @Setter
-@NoArgsConstructor
+//@NoArgsConstructor
 public class OfficeLocation {
 
     @Id
@@ -38,6 +38,9 @@ public class OfficeLocation {
 
     @Column(name = "email", length = 50, nullable = false)
     private String email;
+
+    public OfficeLocation() {
+    }
 
     public OfficeLocation(String officeId, String location, String city, String state, String country, String zipcode, String mobile, String email) {
         this.officeId = officeId;
