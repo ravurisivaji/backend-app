@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface OfficeLocService {
 
-    public OfficeLocation save(OfficeLocation location);
+    public OfficeLocation saveOficeLocation(OfficeLocation location);
     public List<OfficeLocation> findAll();
 
     public Boolean existsByOfficeId(String id);

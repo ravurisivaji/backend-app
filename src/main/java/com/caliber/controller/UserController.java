@@ -2,12 +2,15 @@ package com.caliber.controller;
 
 
 import com.caliber.modal.EmpRoles;
+import com.caliber.modal.OfficeLocation;
 import com.caliber.service.EmpRolesService;
 //import io.swagger.v3.oas.annotations.Operation;
 //import io.swagger.v3.oas.annotations.parameters.RequestBody;
 //import io.swagger.v3.oas.annotations.responses.ApiResponse;
 //import io.swagger.v3.oas.annotations.responses.ApiResponses;
 //import io.swagger.v3.oas.annotations.Parameter;
+import com.caliber.service.OfficeLocService;
+import com.caliber.service.impl.OfficeLocServiceImpl;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,6 +31,9 @@ public class UserController {
 
     @Autowired
     private EmpRolesService empRolesService;
+
+    @Autowired
+    OfficeLocService officeLocService;
 
 //    @Operation(summary = "Get a user by ID", description = "Retrieve a user by their unique ID.")
 //    @ApiResponses(value = {
@@ -74,5 +80,22 @@ public class UserController {
     @GetMapping(value = "/allRoles", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<EmpRoles> getAllUsers() {
         return empRolesService.findAll();
+    }
+
+    @PostMapping(value = "/saveOfficeLoc", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> saveOfficeAddress(@RequestBody OfficeLocation office){
+
+        logger.info("Saving Office Address details :  " , office.toString());
+
+        if( ObjectUtils.isEmpty(office)){
+            logger.error(" One of the field in office object is empty {}", office.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        OfficeLocation officeLocation = officeLocService.saveOficeLocation(office);
+        if( ObjectUtils.isEmpty(officeLocation)){
+            return new ResponseEntity<>(officeLocation, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(officeLocation, HttpStatus.OK);
     }
 }
